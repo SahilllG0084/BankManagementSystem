@@ -1,14 +1,11 @@
  package com.cjc.bms.serviceimpl;
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 import com.cjc.bms.config.DbConnection;
 import com.cjc.bms.model.Account;
 import com.cjc.bms.service.RBI;
@@ -34,10 +31,10 @@ public class SBI implements RBI {
 		System.out.println("Enter Adhar Number Here :");
 		ac.setAdharno(sc.nextLong());
 		
-		System.out.println("Enter Mobile Numbder Here :");
+		System.out.println("Enter Mobile Number Here :");
 		ac.setMobileno(sc.nextLong());
 		
-		System.out.println("Enter PanCard Number Here :");
+		System.out.println("Enter Pancard Number Here :");
 		ac.setPancard(sc.next());
 		
 		System.out.println("Enter Account Holder Gender Here :");
@@ -75,16 +72,6 @@ public class SBI implements RBI {
 		catch(InputMismatchException e) {
 			System.out.println(e.getMessage());
 		}
-		finally
-		{
-			try {
-				con.commit();
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
 	}
 
 	@Override
@@ -94,7 +81,7 @@ public class SBI implements RBI {
 		int acno = sc.nextInt();
 		
 		if(acno != ac.getAcno()) {
-			System.out.println("Invalid Account Number ");
+			System.out.println("Invalid Account Number");
 		}
 		
 		//Step 3: Create SQL Query
@@ -125,17 +112,10 @@ public class SBI implements RBI {
 		catch(InputMismatchException e) {
 			System.out.println(e.getMessage());
 		}
-		finally
+		catch(NullPointerException e)
 		{
-			try {
-				con.commit();
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
+			System.out.println(e.getMessage());
 		}
-		
 	}
 
 	@Override
@@ -191,16 +171,6 @@ public class SBI implements RBI {
 		    catch(InputMismatchException e) {
 		    	    System.out.println(e.getMessage());
 		    }
-		 finally
-			{
-				try {
-					con.commit();
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				
-			}
     }
 	
 	@Override
@@ -250,23 +220,13 @@ public class SBI implements RBI {
 		    catch(InputMismatchException e) {
 			 System.out.println(e.getMessage());
 		    }
-		    finally
-			{
-				try {
-					con.commit();
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				
-			}
 	}
 
 	@Override
 	public void showBalance() {
 		
 		try {
-		System.out.println("Enter Account NUmber For View Balance :");
+		System.out.println("Enter Account Number For View Balance :");
 		int acno = sc.nextInt();
 		
 		String check = "select balance from account where acno=?";
@@ -294,12 +254,10 @@ public class SBI implements RBI {
 		finally
 		{
 			try {
-				con.commit();
 				con.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
-			
+			}		
 		}
 	}
 }
