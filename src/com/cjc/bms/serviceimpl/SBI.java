@@ -13,7 +13,9 @@ import com.cjc.bms.service.RBI;
 public class SBI implements RBI {
    
 	Scanner sc = new Scanner(System.in);
+	
 	Connection con = DbConnection.getConnection();
+	
 	Account ac = new Account();
 	
 	@Override
@@ -63,7 +65,7 @@ public class SBI implements RBI {
 		  //Step 5: Execute The SQL Query
 		  ps.execute();
 		  
-		System.out.println("Account Created Successfuly......");  
+		System.out.println("Account Created Successfully......");  
 		
 		}
 		catch(SQLException e) {
