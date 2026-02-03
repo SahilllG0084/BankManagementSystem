@@ -16,10 +16,10 @@ public class SBI implements RBI {
 	
 	Connection con = DbConnection.getConnection();
 	
-	Account ac = new Account();
-	
 	@Override
 	public void createAccount() {
+		
+		Account ac = new Account();
 		
 		System.out.println("Enter Account Number Here :");
 		ac.setAcno(sc.nextInt());
@@ -46,7 +46,7 @@ public class SBI implements RBI {
 		ac.setBalance(sc.nextDouble());
 		
 		//Step 3: Create SQL Query
-		String insert = "insert into account value(?,?,?,?,?,?,?,?)";
+		String insert = "insert into account values(?,?,?,?,?,?,?,?)";
 		
 		//Step 4: Create PreparedStatement(I) Object
 		
@@ -81,11 +81,7 @@ public class SBI implements RBI {
 		
 		System.out.println("Enter Account Holder No");
 		int acno = sc.nextInt();
-		
-		if(acno != ac.getAcno()) {
-			System.out.println("Invalid Account Number");
-		}
-		
+				
 		//Step 3: Create SQL Query
 		String select = "select * from account where acno = ?";
 		
@@ -252,14 +248,6 @@ public class SBI implements RBI {
 		catch(InputMismatchException e)
 		{
 			System.out.println(e.getMessage());
-		}
-		finally
-		{
-			try {
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}		
 		}
 	}
 }
