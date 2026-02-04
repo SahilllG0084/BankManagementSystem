@@ -2,32 +2,36 @@ package com.cjc.bms.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class DbConnection {
-    
-	public static Connection getConnection()
-	{
-		Connection con = null;
-		
-		try {
-			//Step 1: Load Database Driver Class
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			
-			//Step 2: Establish Database Connection
-			String url = "jdbc:mysql://localhost:3306/reg36";
-			String user = "root";
-			String pass = "mysql";
-			
-			con = DriverManager.getConnection(url, user, pass);
-		}
-		catch(ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		catch(SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		
-		return con;
-	}
+
+    private static final String DEFAULT_URL = "jdbc:mysql://localhost:3306/reg36";
+    private static final String DEFAULT_USER = "root";
+    private static final String DEFAULT_PASS = "mysql";
+
+    public static Connection getConnection() {
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            String url  = System.getenv("DB_URL");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            if (url == null || url.isEmpty()) {
+                url = DEFAULT_URL;
+            }
+            if (user == null || user.isEmpty()) {
+                user = DEFAULT_USER;
+            }
+            if (pass == null || pass.isEmpty()) {
+                pass = DEFAULT_PASS;
+            }
+
+            return DriverManager.getConnection(url, user, pass);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Database connection failed", e);
+        }
+    }
 }
